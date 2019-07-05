@@ -87,8 +87,8 @@
                                 </application>
                                  -->
                                 <active>happy_beard-acti-dev</active>
-                                <active>happy_beard-acti-test</active>
-                            </actives>
+                            <!--<active>happy_beard-acti-test</active> -->
+                        </actives>
 
                             <!-- 是否为还原部署，默认:false 为更新部署 -->
                             <isBackup>false</isBackup>
