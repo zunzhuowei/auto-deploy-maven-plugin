@@ -1,0 +1,175 @@
+deploy:
+  #mavenHome: "E://maven/apache-maven-3.5.4"                   # 配置 maven home 目录
+  mavenHome: "D://soft/apache-maven-3.2.1"                   # 配置 maven home 目录
+  gitConfig:
+    gitDirectory: "E://aa"                                    # 配置 clone 下来的代码存放的位置
+    gitUri: "git@github.com:zunzhuowei/base.git"              # 配置远程仓库地址
+    gitRemote: "master"                                       # 配置 git 分支
+    gitPassword: ""                             # git 仓库密码，如果已经是 ssh 免密登录了，则为空
+    gitUsername: ""                             # git 仓库用户名，如果已经是 ssh 免密登录了，则为空
+
+  # 执行的 maven 指令集；
+  pomGoals:
+    -
+      mavenPomxmlPath: "E://aa/pom.xml"                       # 执行指令的 pom.xml 的地址
+      mavenGoals: "clean package -DskipTest=true"                      # 执行的指令
+#    -
+#      mavenPomxmlPath: "E://aa/gateway/pom.xml"                # 执行指令的 pom.xml 的地址
+#      mavenGoals: "clean package -DskipTest=true"              # 执行的指令
+
+  # 本地替换配置文件集列表
+  moveFile2Dirs:
+    -
+      filePathName: "D://test/yml/bootstrap.yml"                 #  配置文件的地址
+      destinationDir: "E://aa/gateway/src/main/resources/"                   #  移动配置文件的目的地
+
+#    -
+#      filePathName: "E://aa/pom.xml"                 #  配置文件的地址
+#      destinationDir: "E://haha2/"                   #  移动配置文件的目的地
+
+  # 远程 linux 服务器配置列表
+  servers:
+    -
+      id: "server1"                                     # 服务器 id 应当唯一
+      host: "192.168.1.188"                                   # 服务器 ip
+      port:  "22"                                  #  服务器 端口
+      userName: "user_01"                               #  服务器用户名
+      passWord: "xxxxxxxxxxxxxxxx"                               # 服务器密码
+#    -
+#      id: server1                                     # 服务器 id 应当唯一
+#      host: 192.168.1.188                                   # 服务器 ip
+#      port: 22                                   #  服务器 端口
+#      userName: user_01                               #  服务器用户名
+#      passWord: xxxxxxxxxxxxxxxx                               # 服务器密码
+
+  # 备份
+  backups:
+    -
+      serverId: server1                                 # 配置的服务器 id
+      backupCfgs:
+        -
+          remoteSrcFilePath: /home/user_01/nohup.out                  #  远程源文件目录；
+          remoteBackupDestPaths:                # 远程服务备份目录；应该为列表，支持备份到多个目录
+            - /home/user_01/qs/
+
+          localPaths:                            # 本地备份目录；应该为列表，支持备份到多个目录
+            - D://aa/ss/
+#        -
+#          remoteSrcFilePath: /wwwroot1/java/tomcat/webapp/app.war                  #  远程源文件目录；
+#          remoteBackupDestPaths:                # 远程服务备份目录；应该为列表，支持备份到多个目录
+#            - /wwwroot1/java/backs/app/
+#            - /wwwroot1/java/backs/app2/
+#          localPaths:                             # 本地备份目录；应该为列表，支持备份到多个目录
+#            - D://aa1/ss/
+#            - D://aa1/ss2/
+#    -
+#      serverId: server2                                 # 配置的服务器 id
+#      backupCfgs:
+#        -
+#          remoteSrcFilePath: /wwwroot2/java/tomcat/webapp/app.war                  #  远程源文件目录；
+#          remoteBackupDestPaths:                # 远程服务备份目录；应该为列表，支持备份到多个目录
+#            - /wwwroot2/java/backs/app/
+#            - /wwwroot2/java/backs/app2/
+#          localPaths:                             # 本地备份目录；应该为列表，支持备份到多个目录
+#            - D://aa2/ss/
+#            - D://aa2/ss2/
+#        -
+#          remoteSrcFilePath: /wwwroot22/java/tomcat/webapp/app.war                  #  远程源文件目录；
+#          remoteBackupDestPaths:                # 远程服务备份目录；应该为列表，支持备份到多个目录
+#            - /wwwroot22/java/backs/app/
+#            - /wwwroot22/java/backs/app2/
+#          localPaths:                             # 本地备份目录；应该为列表，支持备份到多个目录
+#            - D://aa22/ss/
+#            - D://aa22/ss2/
+
+  # 配置文件替换
+  config:
+    enable: remote                                  # 配置文件替换类型；remote/local；枚举类
+    # 远程配置文件替换配置
+    remote:
+      remoteServers:
+        -
+          host: 192.168.1.188                                   # 配置文件服务器 ip
+          port: 22                                   #  配置文件服务器 端口
+          userName: user_01                                #  配置文件服务器用户名
+          passWord: xxxxxxxxxxxxxxxx                               # 配置文件服务器密码
+          configCfgs:                                # 配置详情列表
+            -
+              remoteCfgFilePath: /home/user_01/qs/bootstrap.yml                      # 远程配置文件服务器的配置文件目录
+              localDestPath: E://aa/gateway/src/main/resources/                         # 存放获取到的配置文件的本地目录
+            -
+              remoteCfgFilePath: /home/user_01/qs/bootstrap222.yml                     # 远程配置文件服务器的配置文件目录
+              localDestPath: E://aa/gateway/src/main/resources/                          # 存放获取到的配置文件的本地目录
+#        -
+#          host: 192.168.1.188                                   # 配置文件服务器 ip
+#          port: 22                                   #  配置文件服务器 端口
+#          userName: user_01                                #  配置文件服务器用户名
+#          passWord: xxxxxxxxxxxxxxxx                               # 配置文件服务器密码
+#          configCfgs:                                # 配置详情列表
+#            -
+#              remoteCfgFilePath: /wwwroot/java/cfgs/jdbc.properties                      # 远程配置文件服务器的配置文件目录
+#              localDestPath: D://aa/base/deploy/src/main/resources                          # 存放获取到的配置文件的本地目录
+#            -
+#              remoteCfgFilePath: /wwwroot/java/cfgs/log4j.properties                      # 远程配置文件服务器的配置文件目录
+#              localDestPath: D://aa/base/deploy/src/main/resources                          # 存放获取到的配置文件的本地目录
+
+    # 本地配置文件替换配置
+    local:
+      localCfgs:
+        -
+          filePathName: "D://test/yml/bootstrap.yml"                 #  配置文件的地址
+          destinationDir: "E://aa/gateway/src/main/resources/"                    #  移动配置文件的目的地
+
+#        -
+#          filePathName: "E://aa/pom.xml"                 #  配置文件的地址
+#          destinationDir: "E://haha2/"                   #  移动配置文件的目的地
+
+  # 上传打好的包
+  uploadPackages:
+    -
+      serverId: server1                                          # 远程服务器id
+      localPackagePath: E://aa/gateway/target/gateway.jar                                      #  要上传应用包所在本地目录地址
+      remoteDest: /home/user_01/                                        # 远程服务器目录
+      packageName: gateway.jar                                      # 上传后，在远程服务器中的命名
+#    -
+#      serverId: server2                                          # 远程服务器id
+#      localPackagePath: D://aa/base/deploy2/target/acti.war                                      #  要上传应用包所在本地目录地址
+#      remoteDest: /wwwroot/java/deploy/                                         # 远程服务器目录
+#      packageName: myacti.war                                      # 上传后，在远程服务器中的命名
+
+  # 远程服务器执行 linux 指令集，完成部署任务
+  deployInstructionSet:
+    -
+      serverId: server1                                          # 远程服务器id
+      instructions:                                       # 执行的指令集合
+        - "cd /home/user_01/"
+        - "mkdir logs"
+        - "nohup java -jar gateway.jar > ./logs/out.log 2>&1 &"
+        - ps
+#    -
+#      serverId: server2                                          # 远程服务器id
+#      instructions:                                       # 执行的指令集合
+#        - ls
+#        - pwd
+#        - ps
+
+  # 还原部署时备份的应用
+  reductionApps:
+    -
+      serverId: server1                                          # 远程服务器id
+      localFilePath: D://aa/backup/app.war                                      # 备份的文件本地目录地址
+      remoteDestPath: /wwwroot/java/backup/app.war                                      # 备份的文件远程目录地址
+      reductionTempDir: /wwwroot/java/tempdir/                           #还原包临时存放目录
+      instructions:                                       # 执行的指令集合
+        - ls
+        - pwd
+        - ps
+    -
+      serverId: server2                                          # 远程服务器id
+      localFilePath: D://aa/backup/app.war                                      # 备份的文件本地目录地址
+      remoteDestPath:  /wwwroot/java/backup/app.war                                      # 备份的文件远程目录地址
+      reductionTempDir: /wwwroot/java/tempdir/                           #还原包临时存放目录
+      instructions:                                       # 执行的指令集合
+        - ls
+        - pwd
+        - ps
